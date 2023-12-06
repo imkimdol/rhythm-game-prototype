@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://e0d57lqedoto"]
+
+[ext_resource type="Script" path="res://editor/editor.gd" id="1_3m44l"]
+[ext_resource type="Script" path="res://editor/camera.gd" id="2_qotlv"]
+
+[node name="Editor" type="Node2D"]
+script = ExtResource("1_3m44l")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("2_qotlv")

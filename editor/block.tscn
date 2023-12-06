@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://h3pjqsmvpqim"]
+
+[ext_resource type="Script" path="res://editor/block.gd" id="1_b2u8h"]
+[ext_resource type="Texture2D" uid="uid://duarxi77s8v4i" path="res://purple.png" id="2_38j0q"]
+[ext_resource type="Texture2D" uid="uid://f0mfv11wcfcf" path="res://white.png" id="2_qgrxj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wp3m6"]
+
+[node name="Block" type="Node2D" node_paths=PackedStringArray("sprite", "highlight")]
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1_b2u8h")
+sprite = NodePath("Sprite2D")
+highlight = NodePath("Highlight")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_38j0q")
+
+[node name="Highlight" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.329412)
+texture = ExtResource("2_qgrxj")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(6.5, 6.5)
+shape = SubResource("RectangleShape2D_wp3m6")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
