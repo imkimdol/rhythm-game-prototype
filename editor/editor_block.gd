@@ -1,28 +1,23 @@
-extends Node2D
+class_name EditorBlock extends Block
 
-@export var sprite: Sprite2D
 @export var highlight: Sprite2D
 
 var is_touching_mouse := false
 var is_grabbed := false
 
-enum HEIGHTS {DOWN, MIDDLE, UP}
-var height := HEIGHTS.MIDDLE
-
-var purple_image = preload("res://purple.png")
-var salmon_image = preload("res://salmon.png")
-var teal_image = preload("res://teal.png")
-var images = [salmon_image, purple_image, teal_image]
 
 func _process(_delta):
+	super(_delta)
+	
 	if is_grabbed:
-		position = EditorGlobal.calculate_mouse_pos(get_viewport().get_mouse_position())
+		var mouse_position = EditorGlobal.calculate_mouse_pos(get_viewport().get_mouse_position())
+		position = EditorGlobal.round_coords(mouse_position)
 
 func _on_area_2d_mouse_entered():
 	if is_grabbed:
 		is_touching_mouse = true
 		sprite.modulate = Color(1, 1, 1, 0.7)
-	elif !EditorGlobal.mouse_is_grabbing:
+	elif !EditorGlobal.mouse_in_use:
 		is_touching_mouse = true
 		highlight.visible = true
 	
@@ -42,7 +37,7 @@ func _input(event):
 			if mouse_event.button_index == MOUSE_BUTTON_LEFT:
 				sprite.modulate = Color(1, 1, 1, 0.7)
 				is_grabbed = !is_grabbed
-				EditorGlobal.mouse_is_grabbing = !EditorGlobal.mouse_is_grabbing
+				EditorGlobal.mouse_in_use = !EditorGlobal.mouse_in_use
 			elif mouse_event.button_index == MOUSE_BUTTON_RIGHT:
 				EditorGlobal.touching_mouse -= 1
 				queue_free()
@@ -60,12 +55,23 @@ func _input(event):
 		if is_grabbed:
 			move_up()
 
+
 func move_down():
-	if height != HEIGHTS.DOWN:
+	if height != HEIGHTS.DOWN as int:
 		height -= 1
 		sprite.texture = images[height]
 
 func move_up():
-	if height != HEIGHTS.UP:
+	if height != HEIGHTS.UP as int:
 		height += 1
 		sprite.texture = images[height]
+
+
+func get_save_data() -> Dictionary:
+	return {
+		"pos_x": position.x,
+		"pos_y": position.y,
+		"scale_x": scale.x,
+		"scale_y": scale.y,
+		"height": height
+	}
