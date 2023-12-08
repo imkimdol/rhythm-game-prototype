@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://2kborpnpfd53"]
+
+[ext_resource type="PackedScene" uid="uid://bburqw5vej3yb" path="res://game/player/key/key.tscn" id="1_vlw3g"]
+[ext_resource type="Texture2D" uid="uid://duarxi77s8v4i" path="res://assets/textures/purple.png" id="2_mhkku"]
+
+[node name="MiddleKey" instance=ExtResource("1_vlw3g")]
+assigned_height = 1
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_mhkku")

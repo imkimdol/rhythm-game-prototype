@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvt5kur43rdcp"]
+
+[ext_resource type="PackedScene" uid="uid://bburqw5vej3yb" path="res://game/player/key/key.tscn" id="1_hylhh"]
+[ext_resource type="Texture2D" uid="uid://bim30mkb4kabq" path="res://assets/textures/teal.png" id="2_xnlhv"]
+
+[node name="TopKey" instance=ExtResource("1_hylhh")]
+assigned_height = 2
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_xnlhv")

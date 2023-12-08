@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://bburqw5vej3yb"]
+
+[ext_resource type="Script" path="res://game/player/key/key.gd" id="1_q6ofm"]
+[ext_resource type="Texture2D" uid="uid://f0mfv11wcfcf" path="res://assets/textures/white.png" id="1_ycghi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2oaw0"]
+size = Vector2(128, 128)
+
+[sub_resource type="Animation" id="Animation_bjpjb"]
+resource_name = "flash"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 0.0301856),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1cwmi"]
+_data = {
+"flash": SubResource("Animation_bjpjb")
+}
+
+[node name="Key" type="Node2D"]
+scale = Vector2(1, 0.5)
+script = ExtResource("1_q6ofm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ycghi")
+
+[node name="Highlight" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.32549)
+texture = ExtResource("1_ycghi")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_2oaw0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1cwmi")
+}

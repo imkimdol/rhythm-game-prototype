@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bimm5ioh7ni7n"]
+
+[ext_resource type="PackedScene" uid="uid://bburqw5vej3yb" path="res://game/player/key/key.tscn" id="1_blvq8"]
+[ext_resource type="Texture2D" uid="uid://b8vyf2rgyg0ry" path="res://assets/textures/salmon.png" id="2_rhibq"]
+
+[node name="BottomKey" instance=ExtResource("1_blvq8")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_rhibq")
