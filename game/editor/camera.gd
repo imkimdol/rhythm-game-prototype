@@ -1,6 +1,7 @@
 extends Camera2D
 
 @export var position_label: Label
+@export var bounds: Node2D
 
 const speed = 2000
 const camera_offset = -480
@@ -21,6 +22,7 @@ func _process(delta):
 		position.y = min(camera_offset, position.y)
 	
 	position_label.text = "Camera position: " + str((-1 * position.y) + camera_offset)
+	bounds.position = position
 
 func _input(event):
 	if event.is_action_pressed("ui_scroll_up"):

@@ -1,11 +1,14 @@
 extends Node2D
 
+signal select_blocks
+
 @export var load_dialog: FileDialog
 @export var save_dialog: FileDialog
 @export var song_dialog: FileDialog
 @export var blocks: Node2D
 @export var camera: Camera2D
 @export var play_button: Button
+@export var drag_area: Sprite2D
 @export var file_path_label: Label
 @export var song_path_label: Label
 
@@ -38,11 +41,21 @@ func _input(event):
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
 		
-		if mouse_event.button_index == MOUSE_BUTTON_LEFT && mouse_event.pressed && !EditorGlobal.touching_mouse && !EditorGlobal.mouse_in_use:
-			var new_block = block.instantiate()
-			blocks.add_child(new_block)
-			var mouse_pos = EditorGlobal.calculate_mouse_pos(event.position)
-			new_block.position = EditorGlobal.round_coords(mouse_pos)
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT && !EditorGlobal.touching_mouse && !EditorGlobal.mouse_in_use:
+			if mouse_event.pressed:
+				EditorGlobal.mouse_drag_start = EditorGlobal.calculate_mouse_pos(event.position)
+				EditorGlobal.mouse_is_holding = true
+				
+			elif !mouse_event.pressed:
+				if drag_area.calculate_area() > 500:
+					select_blocks.emit()
+				else:
+					var new_block = block.instantiate()
+					blocks.add_child(new_block)
+					var mouse_pos = EditorGlobal.calculate_mouse_pos(event.position)
+					new_block.position = EditorGlobal.round_coords(mouse_pos)
+				
+				EditorGlobal.mouse_is_holding = false
 	else:
 		if event.is_action_pressed("ui_new"):
 			new_map()

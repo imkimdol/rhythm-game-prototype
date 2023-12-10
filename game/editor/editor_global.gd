@@ -2,6 +2,9 @@ extends Node
 
 var touching_mouse: int
 var mouse_in_use: bool
+var mouse_is_holding: bool
+var mouse_drag_start: Vector2
+
 var camera: Camera2D
 var restore_editor := false
 
@@ -16,6 +19,7 @@ func calculate_mouse_pos(event_pos: Vector2) -> Vector2:
 func reset():
 	touching_mouse = 0
 	mouse_in_use = false
+	mouse_is_holding = false
 
 func _input(event):
 	if event.is_action_pressed("fix_editor"):
@@ -34,11 +38,16 @@ func round_coords(coords: Vector2) -> Vector2:
 	x_comp = int(x_comp) * 64
 	y_comp = int(y_comp) * 32 
 	
+	x_comp = min(960, x_comp)
+	x_comp = max(-960, x_comp)
 	y_comp = min(0, y_comp)
 	
 	return Vector2(x_comp, y_comp)
 
-func load_and_restore_editor():
+func load_editor():
 	get_tree().change_scene_to_packed(editor)
+
+func load_and_restore_editor():
+	load_editor()
 	restore_editor = true
 	touching_mouse = 0
