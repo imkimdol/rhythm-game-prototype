@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqjj3le4jl3gi"]
+
+[ext_resource type="Texture2D" uid="uid://c2l8bhpclcl0r" path="res://assets/textures/black.png" id="1_m1bmr"]
+
+[node name="BlockAfterImage" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0.0980392)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_m1bmr")

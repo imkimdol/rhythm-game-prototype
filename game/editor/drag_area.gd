@@ -25,7 +25,7 @@ func _on_editor_select_blocks():
 	for area in $Area2D.get_overlapping_areas():
 		if area.is_in_group("block"):
 			var block = area.get_parent()
-			var diff = block.position - position
+			var diff = block.position - EditorGlobal.mouse_drag_start
 			block.on_group_grab(diff)
 			EditorGlobal.mouse_in_use = true
 	

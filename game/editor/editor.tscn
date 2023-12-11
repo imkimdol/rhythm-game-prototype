@@ -27,13 +27,13 @@ song_path_label = NodePath("CanvasLayer/VBoxContainer/SongPath")
 [node name="Left" type="Sprite2D" parent="Bounds"]
 modulate = Color(1, 1, 1, 0.392157)
 position = Vector2(-963, 0)
-scale = Vector2(0.05, 15)
+scale = Vector2(0.05, 30)
 texture = ExtResource("2_uw6uo")
 
 [node name="Right" type="Sprite2D" parent="Bounds"]
 modulate = Color(1, 1, 1, 0.392157)
 position = Vector2(963, 0)
-scale = Vector2(0.05, 15)
+scale = Vector2(0.05, 30)
 texture = ExtResource("2_uw6uo")
 
 [node name="Start" type="Node2D" parent="."]
@@ -57,7 +57,8 @@ horizontal_alignment = 1
 
 [node name="StartBar" type="Sprite2D" parent="Start"]
 modulate = Color(1, 1, 1, 0.392157)
-scale = Vector2(20, 0.05)
+position = Vector2(0.000158936, 0)
+scale = Vector2(15.0132, 0.05)
 texture = ExtResource("2_uw6uo")
 
 [node name="Blocks" type="Node2D" parent="."]
@@ -82,6 +83,14 @@ rotation_smoothing_enabled = true
 script = ExtResource("2_qotlv")
 position_label = NodePath("../CanvasLayer/VBoxContainer/CameraPos")
 bounds = NodePath("../Bounds")
+
+[node name="Grid" type="Node2D" parent="."]
+
+[node name="GridBar" type="Sprite2D" parent="Grid"]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(0, -50)
+scale = Vector2(15, 0.02)
+texture = ExtResource("2_uw6uo")
 
 [node name="LoadDialog" type="FileDialog" parent="."]
 title = "Open a File"
