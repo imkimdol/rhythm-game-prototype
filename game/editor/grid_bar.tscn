@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cka5oahyxhhvm"]
+
+[ext_resource type="Texture2D" uid="uid://f0mfv11wcfcf" path="res://assets/textures/white.png" id="1_pb1wn"]
+
+[node name="GridBar" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0.156863)
+position = Vector2(0, -50)
+scale = Vector2(15, 0.02)
+texture = ExtResource("1_pb1wn")

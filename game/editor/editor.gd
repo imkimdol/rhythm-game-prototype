@@ -9,6 +9,7 @@ signal select_blocks
 @export var camera: Camera2D
 @export var play_button: Button
 @export var drag_area: Sprite2D
+@export var bpm_label: Label
 @export var file_path_label: Label
 @export var song_path_label: Label
 
@@ -27,6 +28,7 @@ func restore():
 	_on_load_dialog_file_selected(Global.map_path)
 
 func reset():
+	set_bpm(120)
 	set_map_path("")
 	set_song_path(default_song_path)
 	play_button.disabled = true
@@ -54,6 +56,7 @@ func _input(event):
 					blocks.add_child(new_block)
 					var mouse_pos = EditorGlobal.calculate_mouse_pos(event.position)
 					new_block.position = EditorGlobal.round_coords(mouse_pos)
+					new_block.check_highest_block()
 				
 				EditorGlobal.mouse_is_holding = false
 	else:
@@ -103,6 +106,10 @@ func set_song_path(path: String):
 	Global.song_path = path
 	song_path_label.text = path
 
+func set_bpm(bpm: int):
+	Global.bpm = bpm
+	bpm_label.text = str(bpm) + " bpm"
+
 func reconstruct_blocks(blocks_array: Array):
 	for block_data in blocks_array:
 		var new_block = block.instantiate()
@@ -116,6 +123,7 @@ func get_save_data() -> Dictionary:
 		blocks_data.append(block.get_save_data())
 	
 	return {
+		"bpm": Global.bpm,
 		"song_path": Global.song_path,
 		"camera_pos": camera.position.y,
 		"blocks": blocks_data
@@ -157,6 +165,7 @@ func _on_load_dialog_file_selected(path):
 	reset()
 	set_map_path(path)
 	set_song_path(save_data.song_path)
+	set_bpm(save_data.bpm)
 	
 	camera.position.y = save_data.camera_pos
 	reconstruct_blocks(save_data.blocks)

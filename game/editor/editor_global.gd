@@ -4,6 +4,7 @@ var touching_mouse: int
 var mouse_in_use: bool
 var mouse_is_holding: bool
 var mouse_drag_start: Vector2
+var highest_block:= -1480.0
 
 var camera: Camera2D
 var restore_editor := false

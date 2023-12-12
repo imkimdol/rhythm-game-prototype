@@ -14,6 +14,7 @@ var afterimage: Sprite2D
 func _ready():
 	height = Block.HEIGHTS.MIDDLE
 
+
 func _process(_delta):
 	super(_delta)
 	
@@ -51,7 +52,7 @@ func on_group_grab(diff):
 	if Input.is_action_pressed("ui_ctrl"):
 		var new_block = editor_block_scene.instantiate()
 		get_parent().add_child(new_block)
-		new_block.reconstruct(get_save_data() )
+		new_block.reconstruct(get_save_data())
 	
 	is_grabbed = true
 	is_group_grab = true
@@ -59,6 +60,14 @@ func on_group_grab(diff):
 	sprite.modulate = Color(1, 1, 1, 0.7)
 	
 	create_afterimage()
+
+func reconstruct(data: Dictionary):
+	super(data)
+	check_highest_block()
+
+func check_highest_block():
+	if position.y < EditorGlobal.highest_block:
+		EditorGlobal.highest_block = position.y
 
 
 func _input(event):
@@ -70,7 +79,9 @@ func _input(event):
 			is_grabbed = false
 			EditorGlobal.mouse_in_use = false
 			sprite.modulate = Color("ffffff")
+			check_highest_block()
 			afterimage.queue_free()
+			
 			return
 		
 		if !mouse_event.pressed && is_touching_mouse && !EditorGlobal.mouse_is_holding:
@@ -82,6 +93,7 @@ func _input(event):
 				if is_grabbed:
 					create_afterimage()
 				else:
+					check_highest_block()
 					afterimage.queue_free()
 				
 			elif mouse_event.button_index == MOUSE_BUTTON_RIGHT && !is_grabbed:
@@ -94,6 +106,7 @@ func _input(event):
 		EditorGlobal.mouse_in_use = false
 		afterimage.queue_free()
 		queue_free()
+		
 	elif is_touching_mouse || is_group_grab:
 		if event.is_action_pressed("ui_left"):
 			scale.x -= 0.3
