@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://game/editor/editor_block.gd" id="2_rj4sg"]
 [ext_resource type="Texture2D" uid="uid://f0mfv11wcfcf" path="res://assets/textures/white.png" id="3_8r4a6"]
 
-[node name="EditorBlock" node_paths=PackedStringArray("highlight") instance=ExtResource("1_njqff")]
+[node name="EditorBlock" node_paths=PackedStringArray("highlight") groups=["block"] instance=ExtResource("1_njqff")]
 script = ExtResource("2_rj4sg")
 highlight = NodePath("Highlight")
 

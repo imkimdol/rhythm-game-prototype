@@ -4,12 +4,14 @@ var touching_mouse: int
 var mouse_in_use: bool
 var mouse_is_holding: bool
 var mouse_drag_start: Vector2
-var highest_block:= -1480.0
+var highest_block:= -880
 
+var editor: Editor
 var camera: Camera2D
 var restore_editor := false
 
-var editor = preload("res://game/editor/editor.tscn")
+var title_scene = preload("res://game/title/title.tscn")
+var editor_scene = preload("res://game/editor/editor.tscn")
 
 func _ready():
 	reset()
@@ -45,8 +47,11 @@ func round_coords(coords: Vector2) -> Vector2:
 	
 	return Vector2(x_comp, y_comp)
 
+func load_title():
+	get_tree().change_scene_to_packed(title_scene)
+
 func load_editor():
-	get_tree().change_scene_to_packed(editor)
+	get_tree().change_scene_to_packed(editor_scene)
 
 func load_and_restore_editor():
 	load_editor()

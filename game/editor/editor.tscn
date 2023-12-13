@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://e0d57lqedoto"]
+[gd_scene load_steps=10 format=3 uid="uid://e0d57lqedoto"]
 
 [ext_resource type="Script" path="res://game/editor/editor.gd" id="1_3m44l"]
+[ext_resource type="PackedScene" uid="uid://dwqbypcyk7kl2" path="res://game/bounds.tscn" id="2_3yvbl"]
 [ext_resource type="Script" path="res://game/editor/camera.gd" id="2_qotlv"]
 [ext_resource type="Texture2D" uid="uid://f0mfv11wcfcf" path="res://assets/textures/white.png" id="2_uw6uo"]
 [ext_resource type="Theme" uid="uid://potkir36f7bq" path="res://assets/themes/general.tres" id="3_s3y5m"]
@@ -24,19 +25,7 @@ bpm_label = NodePath("CanvasLayer/VBoxContainer/Bpm")
 file_path_label = NodePath("CanvasLayer/VBoxContainer/FilePath")
 song_path_label = NodePath("CanvasLayer/VBoxContainer/SongPath")
 
-[node name="Bounds" type="Node2D" parent="."]
-
-[node name="Left" type="Sprite2D" parent="Bounds"]
-modulate = Color(1, 1, 1, 0.392157)
-position = Vector2(-963, 0)
-scale = Vector2(0.05, 30)
-texture = ExtResource("2_uw6uo")
-
-[node name="Right" type="Sprite2D" parent="Bounds"]
-modulate = Color(1, 1, 1, 0.392157)
-position = Vector2(963, 0)
-scale = Vector2(0.05, 30)
-texture = ExtResource("2_uw6uo")
+[node name="Bounds" parent="." instance=ExtResource("2_3yvbl")]
 
 [node name="Start" type="Node2D" parent="."]
 scale = Vector2(0.999124, 0.964112)
@@ -211,7 +200,7 @@ offset_right = -2.0
 offset_bottom = 509.0
 grow_horizontal = 0
 grow_vertical = 2
-min_value = -1480.0
+min_value = -880.0
 max_value = 1120.0
 page = 1600.0
 value = -480.0
@@ -219,8 +208,8 @@ script = ExtResource("7_7bch3")
 
 [connection signal="select_blocks" from="." to="DragArea" method="_on_editor_select_blocks"]
 [connection signal="file_selected" from="LoadDialog" to="." method="_on_load_dialog_file_selected"]
-[connection signal="file_selected" from="SaveDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
+[connection signal="file_selected" from="SaveDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="SongDialog" to="." method="_on_song_dialog_file_selected"]
 [connection signal="mouse_entered" from="CanvasLayer/HBoxContainer/NewButton" to="CanvasLayer/HBoxContainer/NewButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/HBoxContainer/NewButton" to="CanvasLayer/HBoxContainer/NewButton" method="_on_mouse_exited"]

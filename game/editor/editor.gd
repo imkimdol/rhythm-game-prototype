@@ -1,4 +1,4 @@
-extends Node2D
+class_name Editor extends Node2D
 
 signal select_blocks
 
@@ -19,6 +19,8 @@ var block = preload("res://game/editor/editor_block.tscn")
 const default_song_path = ("user://music/kb-draft.mp3")
 
 func _ready():
+	EditorGlobal.editor = self
+	
 	if EditorGlobal.restore_editor:
 		restore()
 	else:
@@ -38,6 +40,15 @@ func reset():
 	
 	camera.reset()
 	EditorGlobal.reset()
+
+func check_highest_block_all():
+	EditorGlobal.highest_block = -880
+	
+	for block in blocks.get_children():
+		if block.is_in_group("block") && !block.will_queue_for_death:
+			block.check_highest_block()
+
+
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -68,6 +79,8 @@ func _input(event):
 			save_map()
 		elif event.is_action_pressed("ui_play"):
 			play_map()
+		elif event.is_action_pressed("ui_escape"):
+			EditorGlobal.load_title()
 
 
 

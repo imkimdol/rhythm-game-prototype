@@ -10,6 +10,7 @@ var is_grabbed := false
 var is_group_grab := false
 var group_grab_diff: Vector2
 var afterimage: Sprite2D
+var will_queue_for_death := false
 
 func _ready():
 	height = Block.HEIGHTS.MIDDLE
@@ -99,19 +100,23 @@ func _input(event):
 			elif mouse_event.button_index == MOUSE_BUTTON_RIGHT && !is_grabbed:
 				if EditorGlobal.touching_mouse > 0:
 					EditorGlobal.touching_mouse -= 1
+				will_queue_for_death = true
+				EditorGlobal.editor.check_highest_block_all()
 				queue_free()
 	elif event.is_action_pressed("ui_delete") && (is_grabbed || is_group_grab):
 		if EditorGlobal.touching_mouse > 0:
 			EditorGlobal.touching_mouse -= 1
 		EditorGlobal.mouse_in_use = false
+		will_queue_for_death = true
+		EditorGlobal.editor.check_highest_block_all()
 		afterimage.queue_free()
 		queue_free()
 		
 	elif is_touching_mouse || is_group_grab:
-		if event.is_action_pressed("ui_left"):
+		if event.is_action_pressed("ui_a"):
 			scale.x -= 0.3
 			scale.x = max(0.4, scale.x)
-		elif event.is_action_pressed("ui_right"):
+		elif event.is_action_pressed("ui_d"):
 			scale.x += 0.3
 		elif event.is_action_pressed("ui_block_down"):
 			move_down()

@@ -1,17 +1,31 @@
-extends Node2D
+class_name Player extends Node2D
 
 @export var blocks: Node2D
 @export var audio_player: AudioStreamPlayer
 @export var combo_label: Label
 @export var score_label: Label
+@export var camera: Camera2D
 
 var block = load("res://game/player/player_block.tscn")
 
 func _ready():
+	load_config()
 	var save_data = Global.read_map_file(Global.map_path)
 	audio_player.stream = load_mp3(Global.song_path)
 	reconstruct_blocks(save_data.blocks)
 	PlayerGlobal.player = self
+
+func load_config():
+	var path = "user://config.json"
+	
+	if !FileAccess.file_exists(path):
+		print("no file exists")
+		return
+	
+	var config_data = Global.read_map_file(path)
+	
+	scale.x = config_data.scale
+	camera.position.x = config_data.camera_position
 
 func reconstruct_blocks(blocks_array: Array):
 	for block_data in blocks_array:

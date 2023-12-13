@@ -16,9 +16,9 @@ func reset():
 	EditorGlobal.camera = self
 
 func _process(delta):
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_w"):
 		position.y -= int(speed * delta)
-	elif Input.is_action_pressed("ui_down"):
+	elif Input.is_action_pressed("ui_s"):
 		position.y += int(speed * delta)
 		position.y = min(camera_offset, position.y)
 	

@@ -1,0 +1,103 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6krsgksnu0rb"]
+
+[ext_resource type="PackedScene" uid="uid://cj41wjxkdyya" path="res://game/player/player.tscn" id="1_5maod"]
+[ext_resource type="Script" path="res://game/config/player/player_config.gd" id="2_l7b5m"]
+[ext_resource type="Script" path="res://game/config/player/key_config.gd" id="3_fla7m"]
+
+[node name="PlayerConfig" instance=ExtResource("1_5maod")]
+script = ExtResource("2_l7b5m")
+
+[node name="Blocks" parent="." index="1"]
+visible = false
+script = null
+
+[node name="Q" parent="Keys/Top" index="0"]
+script = ExtResource("3_fla7m")
+
+[node name="W" parent="Keys/Top" index="1"]
+script = ExtResource("3_fla7m")
+
+[node name="E" parent="Keys/Top" index="2"]
+script = ExtResource("3_fla7m")
+
+[node name="R" parent="Keys/Top" index="3"]
+script = ExtResource("3_fla7m")
+
+[node name="T" parent="Keys/Top" index="4"]
+script = ExtResource("3_fla7m")
+
+[node name="Y" parent="Keys/Top" index="5"]
+script = ExtResource("3_fla7m")
+
+[node name="U" parent="Keys/Top" index="6"]
+script = ExtResource("3_fla7m")
+
+[node name="I" parent="Keys/Top" index="7"]
+script = ExtResource("3_fla7m")
+
+[node name="O" parent="Keys/Top" index="8"]
+script = ExtResource("3_fla7m")
+
+[node name="P" parent="Keys/Top" index="9"]
+script = ExtResource("3_fla7m")
+
+[node name="A" parent="Keys/Middle" index="0"]
+script = ExtResource("3_fla7m")
+
+[node name="S" parent="Keys/Middle" index="1"]
+script = ExtResource("3_fla7m")
+
+[node name="D" parent="Keys/Middle" index="2"]
+script = ExtResource("3_fla7m")
+
+[node name="F" parent="Keys/Middle" index="3"]
+script = ExtResource("3_fla7m")
+
+[node name="G" parent="Keys/Middle" index="4"]
+script = ExtResource("3_fla7m")
+
+[node name="H" parent="Keys/Middle" index="5"]
+script = ExtResource("3_fla7m")
+
+[node name="J" parent="Keys/Middle" index="6"]
+script = ExtResource("3_fla7m")
+
+[node name="K" parent="Keys/Middle" index="7"]
+script = ExtResource("3_fla7m")
+
+[node name="L" parent="Keys/Middle" index="8"]
+script = ExtResource("3_fla7m")
+
+[node name="Z" parent="Keys/Bottom" index="0"]
+script = ExtResource("3_fla7m")
+
+[node name="X" parent="Keys/Bottom" index="1"]
+script = ExtResource("3_fla7m")
+
+[node name="C" parent="Keys/Bottom" index="2"]
+script = ExtResource("3_fla7m")
+
+[node name="V" parent="Keys/Bottom" index="3"]
+script = ExtResource("3_fla7m")
+
+[node name="B" parent="Keys/Bottom" index="4"]
+script = ExtResource("3_fla7m")
+
+[node name="N" parent="Keys/Bottom" index="5"]
+script = ExtResource("3_fla7m")
+
+[node name="M" parent="Keys/Bottom" index="6"]
+script = ExtResource("3_fla7m")
+
+[node name="," parent="Keys/Bottom" index="7"]
+script = ExtResource("3_fla7m")
+
+[node name="BlockRemover" parent="." index="3"]
+visible = false
+
+[node name="CanvasLayer" parent="." index="6"]
+visible = false
+
+[node name="Label" parent="." index="7"]
+visible = false
+script = null

@@ -43,3 +43,4 @@ layout_mode = 2
 text = "Config"
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Editor" to="." method="_on_editor_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Config" to="." method="_on_config_pressed"]

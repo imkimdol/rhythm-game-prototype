@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwqbypcyk7kl2"]
+
+[ext_resource type="Texture2D" uid="uid://f0mfv11wcfcf" path="res://assets/textures/white.png" id="1_nhb2d"]
+
+[node name="Bounds" type="Node2D"]
+
+[node name="Left" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-963, 0)
+scale = Vector2(0.05, 30)
+texture = ExtResource("1_nhb2d")
+
+[node name="Right" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(963, 0)
+scale = Vector2(0.05, 30)
+texture = ExtResource("1_nhb2d")
