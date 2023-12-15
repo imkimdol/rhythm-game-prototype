@@ -97,7 +97,3 @@ visible = false
 
 [node name="CanvasLayer" parent="." index="6"]
 visible = false
-
-[node name="Label" parent="." index="7"]
-visible = false
-script = null

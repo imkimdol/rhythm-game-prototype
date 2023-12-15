@@ -5,6 +5,7 @@ signal select_blocks
 @export var load_dialog: FileDialog
 @export var save_dialog: FileDialog
 @export var song_dialog: FileDialog
+@export var bpm_edit: LineEdit
 @export var blocks: Node2D
 @export var camera: Camera2D
 @export var play_button: Button
@@ -122,6 +123,7 @@ func set_song_path(path: String):
 func set_bpm(bpm: int):
 	Global.bpm = bpm
 	bpm_label.text = str(bpm) + " bpm"
+	bpm_edit.text = str(bpm)
 
 func reconstruct_blocks(blocks_array: Array):
 	for block_data in blocks_array:
@@ -192,3 +194,9 @@ func _on_save_dialog_file_selected(path):
 
 func _on_song_dialog_file_selected(path):
 	set_song_path(path)
+
+func _on_text_edit_text_submitted(new_text):
+	var conv = int(new_text)
+
+	if conv:
+		set_bpm(conv)

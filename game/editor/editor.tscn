@@ -12,11 +12,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2ghn"]
 size = Vector2(128, 128)
 
-[node name="Editor" type="Node2D" node_paths=PackedStringArray("load_dialog", "save_dialog", "song_dialog", "blocks", "camera", "play_button", "drag_area", "bpm_label", "file_path_label", "song_path_label")]
+[node name="Editor" type="Node2D" node_paths=PackedStringArray("load_dialog", "save_dialog", "song_dialog", "bpm_edit", "blocks", "camera", "play_button", "drag_area", "bpm_label", "file_path_label", "song_path_label")]
 script = ExtResource("1_3m44l")
 load_dialog = NodePath("LoadDialog")
 save_dialog = NodePath("SaveDialog")
 song_dialog = NodePath("SongDialog")
+bpm_edit = NodePath("CanvasLayer/BPM")
 blocks = NodePath("Blocks")
 camera = NodePath("Camera2D")
 play_button = NodePath("CanvasLayer/HBoxContainer/PlayButton")
@@ -47,7 +48,7 @@ text = "Song Start"
 horizontal_alignment = 1
 
 [node name="StartBar" type="Sprite2D" parent="Start"]
-modulate = Color(1, 1, 1, 0.392157)
+modulate = Color(1, 1, 1, 0.54902)
 position = Vector2(0.000158936, 0)
 scale = Vector2(15.0132, 0.05)
 texture = ExtResource("2_uw6uo")
@@ -110,6 +111,19 @@ filters = PackedStringArray("*.mp3")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="BPM" type="LineEdit" parent="CanvasLayer"]
+offset_left = 581.0
+offset_right = 701.0
+offset_bottom = 50.0
+theme = ExtResource("3_s3y5m")
+placeholder_text = "120"
+max_length = 3
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+script = ExtResource("7_7bch3")
+
 [node name="CameraPos" type="Label" parent="CanvasLayer"]
 anchors_preset = 2
 anchor_top = 1.0
@@ -130,8 +144,7 @@ theme = ExtResource("3_s3y5m")
 [node name="NewButton" type="Button" parent="CanvasLayer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_s3y5m")
-text = "New
-"
+text = "New"
 script = ExtResource("7_7bch3")
 
 [node name="LoadButton" type="Button" parent="CanvasLayer/HBoxContainer"]
@@ -211,6 +224,9 @@ script = ExtResource("7_7bch3")
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="SongDialog" to="." method="_on_song_dialog_file_selected"]
+[connection signal="mouse_entered" from="CanvasLayer/BPM" to="CanvasLayer/BPM" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/BPM" to="CanvasLayer/BPM" method="_on_mouse_exited"]
+[connection signal="text_submitted" from="CanvasLayer/BPM" to="." method="_on_text_edit_text_submitted"]
 [connection signal="mouse_entered" from="CanvasLayer/HBoxContainer/NewButton" to="CanvasLayer/HBoxContainer/NewButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/HBoxContainer/NewButton" to="CanvasLayer/HBoxContainer/NewButton" method="_on_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/NewButton" to="." method="_on_new_button_pressed"]
