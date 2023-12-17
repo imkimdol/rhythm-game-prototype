@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://duarxi77s8v4i" path="res://assets/textures/purple.png" id="2_dwfic"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wp3m6"]
+size = Vector2(20, 23)
 
 [node name="Block" type="Node2D" node_paths=PackedStringArray("sprite")]
 scale = Vector2(0.8, 0.8)

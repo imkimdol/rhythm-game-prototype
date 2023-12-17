@@ -12,7 +12,8 @@ config_version=5
 
 config/name="Rhythm Game Test"
 run/main_scene="res://game/title/title.tscn"
-config/features=PackedStringArray("4.1", "Forward Plus")
+config/features=PackedStringArray("4.2", "Forward Plus")
+run/max_fps=90
 boot_splash/image="res://assets/splash-temp.png"
 config/icon="res://assets/textures/icon.svg"
 
@@ -32,6 +33,15 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+window/vsync/vsync_mode=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/script-ide/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 
