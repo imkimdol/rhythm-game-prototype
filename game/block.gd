@@ -1,6 +1,9 @@
 class_name Block extends Node2D
 
-@export var sprite: Sprite2D
+@onready var sprite := %Sprite2D
+
+const speed := 512
+const height_group_prefix := "block_height_"
 
 enum HEIGHTS {BOTTOM, MIDDLE, TOP}
 var height: int

@@ -12,19 +12,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2ghn"]
 size = Vector2(128, 128)
 
-[node name="Editor" type="Node2D" node_paths=PackedStringArray("load_dialog", "save_dialog", "song_dialog", "bpm_edit", "blocks", "camera", "play_button", "drag_area", "bpm_label", "file_path_label", "song_path_label")]
+[node name="Editor" type="Node2D"]
 script = ExtResource("1_3m44l")
-load_dialog = NodePath("LoadDialog")
-save_dialog = NodePath("SaveDialog")
-song_dialog = NodePath("SongDialog")
-bpm_edit = NodePath("CanvasLayer/BPM")
-blocks = NodePath("Blocks")
-camera = NodePath("Camera2D")
-play_button = NodePath("CanvasLayer/HBoxContainer/PlayButton")
-drag_area = NodePath("DragArea")
-bpm_label = NodePath("CanvasLayer/VBoxContainer/Bpm")
-file_path_label = NodePath("CanvasLayer/VBoxContainer/FilePath")
-song_path_label = NodePath("CanvasLayer/VBoxContainer/SongPath")
 
 [node name="Bounds" parent="." instance=ExtResource("2_3yvbl")]
 
@@ -54,6 +43,7 @@ scale = Vector2(15.0132, 0.05)
 texture = ExtResource("2_uw6uo")
 
 [node name="Blocks" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="DragArea" type="Sprite2D" parent="."]
 visible = false
@@ -72,6 +62,7 @@ script = ExtResource("6_ccqtk")
 camera = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("position_label", "bounds", "scroll_bar")]
+unique_name_in_owner = true
 position = Vector2(0, -480)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
@@ -82,6 +73,7 @@ bounds = NodePath("../Bounds")
 scroll_bar = NodePath("../CanvasLayer/VScrollBar")
 
 [node name="LoadDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
 title = "Open a File"
 initial_position = 1
 size = Vector2i(700, 450)
@@ -92,6 +84,7 @@ root_subfolder = "maps"
 filters = PackedStringArray("*.map")
 
 [node name="SaveDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
 title = "Save Map"
 initial_position = 1
 size = Vector2i(700, 450)
@@ -100,6 +93,7 @@ root_subfolder = "maps"
 filters = PackedStringArray("*.map")
 
 [node name="SongDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
 title = "Open a File"
 initial_position = 1
 size = Vector2i(700, 450)
@@ -111,7 +105,8 @@ filters = PackedStringArray("*.mp3")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="BPM" type="LineEdit" parent="CanvasLayer"]
+[node name="BPMEdit" type="LineEdit" parent="CanvasLayer"]
+unique_name_in_owner = true
 offset_left = 581.0
 offset_right = 701.0
 offset_bottom = 50.0
@@ -172,6 +167,7 @@ text = "Pick Song"
 script = ExtResource("7_7bch3")
 
 [node name="PlayButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("3_s3y5m")
 text = "Play"
@@ -187,16 +183,19 @@ grow_horizontal = 0
 alignment = 2
 
 [node name="Bpm" type="Label" parent="CanvasLayer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "120 bpm"
 horizontal_alignment = 2
 
 [node name="SongPath" type="Label" parent="CanvasLayer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "res://music/kb-draft.mp3"
 horizontal_alignment = 2
 
 [node name="FilePath" type="Label" parent="CanvasLayer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "res://maps/test.map"
 horizontal_alignment = 2
@@ -224,9 +223,9 @@ script = ExtResource("7_7bch3")
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="SongDialog" to="." method="_on_song_dialog_file_selected"]
-[connection signal="mouse_entered" from="CanvasLayer/BPM" to="CanvasLayer/BPM" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/BPM" to="CanvasLayer/BPM" method="_on_mouse_exited"]
-[connection signal="text_submitted" from="CanvasLayer/BPM" to="." method="_on_text_edit_text_submitted"]
+[connection signal="mouse_entered" from="CanvasLayer/BPMEdit" to="CanvasLayer/BPMEdit" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/BPMEdit" to="CanvasLayer/BPMEdit" method="_on_mouse_exited"]
+[connection signal="text_submitted" from="CanvasLayer/BPMEdit" to="." method="_on_text_edit_text_submitted"]
 [connection signal="mouse_entered" from="CanvasLayer/HBoxContainer/NewButton" to="CanvasLayer/HBoxContainer/NewButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/HBoxContainer/NewButton" to="CanvasLayer/HBoxContainer/NewButton" method="_on_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/NewButton" to="." method="_on_new_button_pressed"]

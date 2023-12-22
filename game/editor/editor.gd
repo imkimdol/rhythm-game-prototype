@@ -2,17 +2,17 @@ class_name Editor extends Node2D
 
 signal select_blocks
 
-@export var load_dialog: FileDialog
-@export var save_dialog: FileDialog
-@export var song_dialog: FileDialog
-@export var bpm_edit: LineEdit
-@export var blocks: Node2D
-@export var camera: Camera2D
-@export var play_button: Button
-@export var drag_area: Sprite2D
-@export var bpm_label: Label
-@export var file_path_label: Label
-@export var song_path_label: Label
+@onready var load_dialog := %LoadDialog
+@onready var save_dialog := %SaveDialog
+@onready var song_dialog := %SongDialog
+@onready var bpm_edit := %CanvasLayer/BPMEdit
+@onready var blocks := %Blocks
+@onready var camera := %Camera2D
+@onready var play_button := %CanvasLayer/HBoxContainer/PlayButton
+@onready var drag_area := %DragArea
+@onready var bpm_label := %CanvasLayer/VBoxContainer/Bpm
+@onready var file_path_label := %CanvasLayer/VBoxContainer/FilePath
+@onready var song_path_label := %CanvasLayer/VBoxContainer/SongPath
 
 var player = preload("res://game/player/player.tscn")
 var block = preload("res://game/editor/editor_block.tscn")

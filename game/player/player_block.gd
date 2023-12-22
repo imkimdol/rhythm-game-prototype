@@ -1,5 +1,11 @@
 class_name PlayerBlock extends Block
 
+@onready var area := %Area2D
+@onready var collision_shape := %Area2D/CollisionShape2D
+@onready var hit_particles := %HitParticles
+@onready var death_particles := %DeathParticles
+@onready var animation_player := %AnimationPlayer
+
 func _ready():
 	super()
 
@@ -8,19 +14,19 @@ func _on_area_2d_area_entered(area):
 		on_death()
 
 func on_hit():
-	$Area2D/CollisionShape2D.disabled = true
-	$HitParticles.emitting = true
-	$AnimationPlayer.play("on_hit_or_death")
+	collision_shape.disabled = true
+	hit_particles.emitting = true
+	animation_player.play("on_hit_or_death")
 
 func on_death():
 	PlayerGlobal.miss()
-	$DeathParticles.emitting = true
-	$AnimationPlayer.play("on_hit_or_death")
+	death_particles.emitting = true
+	animation_player.play("on_hit_or_death")
 
 func reconstruct(data: Dictionary):
 	super(data)
 	
-	$Area2D.add_to_group("block_height_" + str(height))
+	area.add_to_group(height_group_prefix + str(height))
 	
 	var color = colors[height] as Color
-	$HitParticles.color = color
+	hit_particles.color = color
