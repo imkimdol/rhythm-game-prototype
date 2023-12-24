@@ -6,7 +6,7 @@ func calculate_area():
 	var diff = current_pos - original_pos
 	return abs(diff.x * diff.y)
 
-func _process(delta):
+func _process(_delta):
 	var original_pos = Editor.mouse_drag_start
 	var current_pos = Editor.editor.calculate_mouse_pos(get_viewport().get_mouse_position())
 	var diff = current_pos - original_pos

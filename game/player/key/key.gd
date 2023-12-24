@@ -10,7 +10,7 @@ class_name PlayerKey extends Node2D
 
 var block_was_hit := false
 
-func _input(event):
+func _input(_event):
 	if Input.is_key_pressed(assigned_key):
 		flash()
 		check_for_blocks()

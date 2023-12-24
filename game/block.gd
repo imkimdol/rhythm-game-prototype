@@ -17,7 +17,7 @@ const colors = [Color("ff596a"), Color("595eff"), Color("59ffbd")]
 func _ready():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	pass
 
 func reconstruct(data: Dictionary):

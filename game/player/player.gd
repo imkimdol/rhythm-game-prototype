@@ -5,18 +5,18 @@ const default_scale := 1
 
 @onready var blocks := %Blocks
 @onready var camera := %Camera2D
-@onready var combo_label := %CanvasLayer/VBoxContainer3/Combo
-@onready var score_label := %CanvasLayer/VboxContainer/Score
+@onready var combo_label := %Combo
+@onready var score_label := %Score
 
 var block = preload("res://game/player/player_block.tscn")
 
 
 #region Events
 func _ready():
+	Player.player = self
 	load_config()
 	var save_data = Global.read_map_file(Global.map_path)
 	reconstruct_blocks(save_data.blocks)
-	current_player = self
 
 func _on_audio_stream_player_finished():
 	Editor.load_and_restore_editor()
@@ -53,14 +53,14 @@ func set_labels():
 #region Static
 static var score := 0
 static var combo := 0
-static var current_player: Player
+static var player: Player
 
 static func increase_score():
-	score += int(1000 * (1.0 + float(combo) / 100.0))
-	combo += 1
-	current_player.set_labels()
+	Player.score += int(1000 * (1.0 + float(combo) / 100.0))
+	Player.combo += 1
+	Player.player.set_labels()
 
 static func miss():
-	combo = 0
-	current_player.set_labels()
+	Player.combo = 0
+	Player.player.set_labels()
 #endregion

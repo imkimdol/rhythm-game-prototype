@@ -28,9 +28,9 @@ func _process(delta):
 
 func _input(event):
 	if event.is_action_pressed("ui_scroll_up"):
-		position.y -= speed / 20
+		position.y -= speed / 20.0
 	elif event.is_action_pressed("ui_scroll_down"):
-		position.y += speed / 20
+		position.y += speed / 20.0
 		position.y = min(camera_offset, position.y)
 
 

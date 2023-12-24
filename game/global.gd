@@ -4,6 +4,7 @@ const config_path := "user://config.json"
 
 var title_scene = preload("res://game/title/title.tscn")
 var editor_scene = preload("res://game/editor/editor.tscn")
+var player_scene = preload("res://game/player/player.tscn")
 
 var map_path := ""
 var song_path := ""
@@ -29,6 +30,9 @@ func load_title():
 
 func load_editor():
 	get_tree().change_scene_to_packed(editor_scene)
+
+func load_player():
+	get_tree().change_scene_to_packed(player_scene)
 
 func read_map_file(path: String) -> Dictionary:
 	var file = FileAccess.open(path, FileAccess.READ)

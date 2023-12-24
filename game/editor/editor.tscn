@@ -46,6 +46,7 @@ texture = ExtResource("2_uw6uo")
 unique_name_in_owner = true
 
 [node name="DragArea" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.470588)
 texture = ExtResource("2_uw6uo")

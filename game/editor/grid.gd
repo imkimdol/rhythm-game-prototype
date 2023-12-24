@@ -10,7 +10,7 @@ func _ready():
 	for n in 50:
 		add_child(grid_bar_scene.instantiate())
 
-func _process(delta):
+func _process(_delta):
 	var counter = -10
 	var pixels_per_beat = (block_speed * 60.0) / float(Global.bpm)
 	var rounded_camera_pos = int((camera.position.y - camera.camera_offset) / pixels_per_beat) * pixels_per_beat

@@ -5,17 +5,16 @@ signal select_blocks
 @onready var load_dialog := %LoadDialog
 @onready var save_dialog := %SaveDialog
 @onready var song_dialog := %SongDialog
-@onready var bpm_edit := %CanvasLayer/BPMEdit
+@onready var bpm_edit := %BPMEdit
 @onready var blocks := %Blocks
 @onready var camera := %Camera2D
-@onready var play_button := %CanvasLayer/HBoxContainer/PlayButton
+@onready var play_button := %PlayButton
 @onready var drag_area := %DragArea
-@onready var bpm_label := %CanvasLayer/VBoxContainer/Bpm
-@onready var file_path_label := %CanvasLayer/VBoxContainer/FilePath
-@onready var song_path_label := %CanvasLayer/VBoxContainer/SongPath
+@onready var bpm_label := %Bpm
+@onready var file_path_label := %FilePath
+@onready var song_path_label := %SongPath
 
-var player = preload("res://game/player/player.tscn")
-var block = preload("res://game/editor/editor_block.tscn")
+var block_scene = preload("res://game/editor/editor_block.tscn")
 
 const default_song_path = ("user://music/kb-draft.mp3")
 
@@ -26,7 +25,7 @@ func _ready():
 		restore()
 	else:
 		reset()
-	
+
 func restore():
 	_on_load_dialog_file_selected(Global.map_path)
 
@@ -70,7 +69,7 @@ func _input(event):
 				if drag_area.calculate_area() > 500:
 					select_blocks.emit()
 				else:
-					var new_block = block.instantiate()
+					var new_block = block_scene.instantiate()
 					blocks.add_child(new_block)
 					var mouse_pos = calculate_mouse_pos(event.position)
 					new_block.position = Editor.round_coords(mouse_pos)
@@ -111,7 +110,7 @@ func play_map():
 	save_map()
 	if Global.map_path == "":
 		return
-	get_tree().change_scene_to_packed(player)
+	Global.load_player()
 
 
 
@@ -133,9 +132,11 @@ func set_bpm(bpm: int):
 
 func reconstruct_blocks(blocks_array: Array):
 	for block_data in blocks_array:
-		var new_block = block.instantiate()
+		var new_block = block_scene.instantiate()
 		blocks.add_child(new_block)
 		new_block.reconstruct(block_data)
+	
+	check_highest_block_all()
 
 func get_save_data() -> Dictionary:
 	var blocks_data = []
@@ -216,7 +217,7 @@ static var touching_mouse: int
 static var mouse_in_use: bool
 static var mouse_is_holding: bool
 static var mouse_drag_start: Vector2
-static var highest_block:= -880
+static var highest_block:= -880.0
 static var restore_editor := false
 static var editor: Editor
 
@@ -241,6 +242,6 @@ static func round_coords(coords: Vector2) -> Vector2:
 
 static func load_and_restore_editor():
 	Global.load_editor()
-	restore_editor = true
-	touching_mouse = 0
+	Editor.restore_editor = true
+	Editor.touching_mouse = 0
 #endregion

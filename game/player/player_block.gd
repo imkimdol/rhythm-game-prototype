@@ -1,6 +1,6 @@
 class_name PlayerBlock extends Block
 
-@onready var area := %Area2D
+@onready var collision_area := %Area2D
 @onready var collision_shape := %Area2D/CollisionShape2D
 @onready var hit_particles := %HitParticles
 @onready var death_particles := %DeathParticles
@@ -26,7 +26,7 @@ func on_death():
 func reconstruct(data: Dictionary):
 	super(data)
 	
-	area.add_to_group(height_group_prefix + str(height))
+	collision_area.add_to_group(height_group_prefix + str(height))
 	
 	var color = colors[height] as Color
 	hit_particles.color = color

@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://b6krsgksnu0rb"]
 
-[ext_resource type="PackedScene" uid="uid://cj41wjxkdyya" path="res://game/player/player.tscn" id="1_5maod"]
+[ext_resource type="PackedScene" uid="uid://cj41wjxkdyya" path="res://game/player/player.tscn" id="1_4nsk5"]
 [ext_resource type="Script" path="res://game/config/player/player_config.gd" id="2_l7b5m"]
 [ext_resource type="Script" path="res://game/config/player/key_config.gd" id="3_fla7m"]
 
-[node name="PlayerConfig" instance=ExtResource("1_5maod")]
+[node name="PlayerConfig" instance=ExtResource("1_4nsk5")]
 script = ExtResource("2_l7b5m")
 
 [node name="Blocks" parent="." index="1"]

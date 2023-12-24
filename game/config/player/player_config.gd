@@ -16,7 +16,7 @@ func _input(event):
 		camera.position.x = 0
 		scale.x = 1
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_pressed("ui_left"):
 		camera.position.x += 5
 	elif Input.is_action_pressed("ui_right"):
