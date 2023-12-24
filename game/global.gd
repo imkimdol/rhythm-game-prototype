@@ -3,6 +3,7 @@ extends Node
 const config_path := "user://config.json"
 
 var title_scene = preload("res://game/title/title.tscn")
+var editor_scene = preload("res://game/editor/editor.tscn")
 
 var map_path := ""
 var song_path := ""
@@ -23,8 +24,11 @@ func _create_config_file():
 	file.store_string(json_string)
 	file.close()
 
-func to_title():
+func load_title():
 	get_tree().change_scene_to_packed(title_scene)
+
+func load_editor():
+	get_tree().change_scene_to_packed(editor_scene)
 
 func read_map_file(path: String) -> Dictionary:
 	var file = FileAccess.open(path, FileAccess.READ)

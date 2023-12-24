@@ -24,8 +24,6 @@ buses/default_bus_layout="res://assets/default_bus_layout.tres"
 [autoload]
 
 Global="*res://game/global.gd"
-EditorGlobal="*res://game/editor/editor_global.gd"
-PlayerGlobal="*res://game/player/player_global.gd"
 
 [display]
 

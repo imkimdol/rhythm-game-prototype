@@ -8,11 +8,7 @@ const default_scale := 1
 @onready var combo_label := %CanvasLayer/VBoxContainer3/Combo
 @onready var score_label := %CanvasLayer/VboxContainer/Score
 
-var block = load("res://game/player/player_block.tscn")
-
-static var score := 0
-static var combo := 0
-static var current_player: Player
+var block = preload("res://game/player/player_block.tscn")
 
 
 #region Events
@@ -23,11 +19,11 @@ func _ready():
 	current_player = self
 
 func _on_audio_stream_player_finished():
-	EditorGlobal.load_and_restore_editor()
+	Editor.load_and_restore_editor()
 
 func _input(event):
 	if event.is_action_pressed("ui_escape"):
-		EditorGlobal.load_and_restore_editor()
+		Editor.load_and_restore_editor()
 #endregion
 
 
@@ -49,8 +45,15 @@ func reconstruct_blocks(blocks_array: Array):
 		new_block.reconstruct(block_data)
 
 func set_labels():
-	combo_label.text = "Combo: " + str(PlayerGlobal.combo)
-	score_label.text = str(PlayerGlobal.score)
+	combo_label.text = "Combo: " + str(Player.combo)
+	score_label.text = str(Player.score)
+#endregion
+
+
+#region Static
+static var score := 0
+static var combo := 0
+static var current_player: Player
 
 static func increase_score():
 	score += int(1000 * (1.0 + float(combo) / 100.0))

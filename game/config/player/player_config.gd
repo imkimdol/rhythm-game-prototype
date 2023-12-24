@@ -6,7 +6,7 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("ui_escape"):
 		save_to_config()
-		Global.to_title()
+		Global.load_title()
 	elif event.is_action_pressed("ui_up"):
 		scale.x += 0.01
 	elif event.is_action_pressed("ui_down"):

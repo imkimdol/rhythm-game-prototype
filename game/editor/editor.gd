@@ -20,9 +20,9 @@ var block = preload("res://game/editor/editor_block.tscn")
 const default_song_path = ("user://music/kb-draft.mp3")
 
 func _ready():
-	EditorGlobal.editor = self
+	Editor.editor = self
 	
-	if EditorGlobal.restore_editor:
+	if Editor.restore_editor:
 		restore()
 	else:
 		reset()
@@ -40,10 +40,13 @@ func reset():
 		block.queue_free()
 	
 	camera.reset()
-	EditorGlobal.reset()
+	
+	touching_mouse = 0
+	mouse_in_use = false
+	mouse_is_holding = false
 
 func check_highest_block_all():
-	EditorGlobal.highest_block = -880
+	Editor.highest_block = -880
 	
 	for block in blocks.get_children():
 		if block.is_in_group("block") && !block.will_queue_for_death:
@@ -52,13 +55,16 @@ func check_highest_block_all():
 
 
 func _input(event):
+	if event.is_action_pressed("fix_editor"):
+		reset()
+	
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
 		
-		if mouse_event.button_index == MOUSE_BUTTON_LEFT && !EditorGlobal.touching_mouse && !EditorGlobal.mouse_in_use:
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT && !Editor.touching_mouse && !Editor.mouse_in_use:
 			if mouse_event.pressed:
-				EditorGlobal.mouse_drag_start = EditorGlobal.calculate_mouse_pos(event.position)
-				EditorGlobal.mouse_is_holding = true
+				Editor.mouse_drag_start = calculate_mouse_pos(event.position)
+				Editor.mouse_is_holding = true
 				
 			elif !mouse_event.pressed:
 				if drag_area.calculate_area() > 500:
@@ -66,11 +72,11 @@ func _input(event):
 				else:
 					var new_block = block.instantiate()
 					blocks.add_child(new_block)
-					var mouse_pos = EditorGlobal.calculate_mouse_pos(event.position)
-					new_block.position = EditorGlobal.round_coords(mouse_pos)
+					var mouse_pos = calculate_mouse_pos(event.position)
+					new_block.position = Editor.round_coords(mouse_pos)
 					new_block.check_highest_block()
 				
-				EditorGlobal.mouse_is_holding = false
+				Editor.mouse_is_holding = false
 	else:
 		if event.is_action_pressed("ui_new"):
 			new_map()
@@ -81,7 +87,7 @@ func _input(event):
 		elif event.is_action_pressed("ui_play"):
 			play_map()
 		elif event.is_action_pressed("ui_escape"):
-			EditorGlobal.load_title()
+			Global.load_title()
 
 
 
@@ -200,3 +206,41 @@ func _on_text_edit_text_submitted(new_text):
 
 	if conv:
 		set_bpm(conv)
+
+func calculate_mouse_pos(event_pos: Vector2) -> Vector2:
+	return event_pos - (get_viewport().get_visible_rect().size / 2) + camera.position
+
+
+#region Static
+static var touching_mouse: int
+static var mouse_in_use: bool
+static var mouse_is_holding: bool
+static var mouse_drag_start: Vector2
+static var highest_block:= -880
+static var restore_editor := false
+static var editor: Editor
+
+static func round_coords(coords: Vector2) -> Vector2:
+	var x_comp := float(coords.x)
+	var y_comp := float(coords.y)
+	
+	x_comp = x_comp / 64
+	y_comp = y_comp / 32
+	
+	x_comp = round(x_comp)
+	y_comp = round(y_comp)
+	
+	x_comp = int(x_comp) * 64
+	y_comp = int(y_comp) * 32 
+	
+	x_comp = min(960, x_comp)
+	x_comp = max(-960, x_comp)
+	y_comp = min(0, y_comp)
+	
+	return Vector2(x_comp, y_comp)
+
+static func load_and_restore_editor():
+	Global.load_editor()
+	restore_editor = true
+	touching_mouse = 0
+#endregion

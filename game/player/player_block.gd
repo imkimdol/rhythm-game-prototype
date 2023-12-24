@@ -19,7 +19,7 @@ func on_hit():
 	animation_player.play("on_hit_or_death")
 
 func on_death():
-	PlayerGlobal.miss()
+	Player.miss()
 	death_particles.emitting = true
 	animation_player.play("on_hit_or_death")
 

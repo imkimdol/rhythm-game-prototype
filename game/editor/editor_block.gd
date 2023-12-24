@@ -21,27 +21,27 @@ func _process(_delta):
 	
 	if is_grabbed:
 		if !is_group_grab:
-			var mouse_position = EditorGlobal.calculate_mouse_pos(get_viewport().get_mouse_position())
-			position = EditorGlobal.round_coords(mouse_position)
+			var mouse_position = Editor.editor.calculate_mouse_pos(get_viewport().get_mouse_position())
+			position = Editor.round_coords(mouse_position)
 		else:
-			var mouse_position = EditorGlobal.calculate_mouse_pos(get_viewport().get_mouse_position())
-			position = EditorGlobal.round_coords(mouse_position + group_grab_diff)
+			var mouse_position = Editor.editor.calculate_mouse_pos(get_viewport().get_mouse_position())
+			position = Editor.round_coords(mouse_position + group_grab_diff)
 
 func _on_area_2d_mouse_entered():
 	if is_grabbed:
 		is_touching_mouse = true
 		sprite.modulate = Color(1, 1, 1, 0.7)
-	elif !EditorGlobal.mouse_in_use:
+	elif !Editor.mouse_in_use:
 		is_touching_mouse = true
 		highlight.visible = true
 	
-	EditorGlobal.touching_mouse += 1
+	Editor.touching_mouse += 1
 
 func _on_area_2d_mouse_exited():
 	is_touching_mouse = false
 	highlight.visible = false
-	if EditorGlobal.touching_mouse > 0:
-		EditorGlobal.touching_mouse -= 1
+	if Editor.touching_mouse > 0:
+		Editor.touching_mouse -= 1
 
 func create_afterimage():
 	afterimage = afterimage_scene.instantiate()
@@ -67,29 +67,29 @@ func reconstruct(data: Dictionary):
 	check_highest_block()
 
 func check_highest_block():
-	if position.y < EditorGlobal.highest_block:
-		EditorGlobal.highest_block = position.y
+	if position.y < Editor.highest_block:
+		Editor.highest_block = position.y
 
 
 func _input(event):
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
 		
-		if !mouse_event.pressed && is_group_grab && !EditorGlobal.mouse_is_holding && mouse_event.button_index == MOUSE_BUTTON_LEFT:
+		if !mouse_event.pressed && is_group_grab && !Editor.mouse_is_holding && mouse_event.button_index == MOUSE_BUTTON_LEFT:
 			is_group_grab = false
 			is_grabbed = false
-			EditorGlobal.mouse_in_use = false
+			Editor.mouse_in_use = false
 			sprite.modulate = Color("ffffff")
 			check_highest_block()
 			afterimage.queue_free()
 			
 			return
 		
-		if !mouse_event.pressed && is_touching_mouse && !EditorGlobal.mouse_is_holding:
+		if !mouse_event.pressed && is_touching_mouse && !Editor.mouse_is_holding:
 			if mouse_event.button_index == MOUSE_BUTTON_LEFT:
 				is_grabbed = !is_grabbed
 				sprite.modulate = Color(1, 1, 1, 0.7) if is_grabbed else Color("ffffff")
-				EditorGlobal.mouse_in_use = !EditorGlobal.mouse_in_use
+				Editor.mouse_in_use = !Editor.mouse_in_use
 				
 				if is_grabbed:
 					create_afterimage()
@@ -98,17 +98,17 @@ func _input(event):
 					afterimage.queue_free()
 				
 			elif mouse_event.button_index == MOUSE_BUTTON_RIGHT && !is_grabbed:
-				if EditorGlobal.touching_mouse > 0:
-					EditorGlobal.touching_mouse -= 1
+				if Editor.touching_mouse > 0:
+					Editor.touching_mouse -= 1
 				will_queue_for_death = true
-				EditorGlobal.editor.check_highest_block_all()
+				Editor.editor.check_highest_block_all()
 				queue_free()
 	elif event.is_action_pressed("ui_delete") && (is_grabbed || is_group_grab):
-		if EditorGlobal.touching_mouse > 0:
-			EditorGlobal.touching_mouse -= 1
-		EditorGlobal.mouse_in_use = false
+		if Editor.touching_mouse > 0:
+			Editor.touching_mouse -= 1
+		Editor.mouse_in_use = false
 		will_queue_for_death = true
-		EditorGlobal.editor.check_highest_block_all()
+		Editor.editor.check_highest_block_all()
 		afterimage.queue_free()
 		queue_free()
 		

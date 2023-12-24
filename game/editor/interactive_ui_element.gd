@@ -1,8 +1,8 @@
 extends Control
 
 func _on_mouse_entered():
-	EditorGlobal.touching_mouse += 1
+	Editor.touching_mouse += 1
 
 func _on_mouse_exited():
-	if EditorGlobal.touching_mouse > 0:
-		EditorGlobal.touching_mouse -= 1
+	if Editor.touching_mouse > 0:
+		Editor.touching_mouse -= 1

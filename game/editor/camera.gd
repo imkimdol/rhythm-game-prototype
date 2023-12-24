@@ -13,7 +13,6 @@ func _ready():
 
 func reset():
 	position = Vector2(0, camera_offset)
-	EditorGlobal.camera = self
 
 func _process(delta):
 	if Input.is_action_pressed("ui_w"):
@@ -25,7 +24,7 @@ func _process(delta):
 	position_label.text = "Camera position: " + str((-1 * position.y) + camera_offset)
 	bounds.position = position
 	scroll_bar.value = position.y
-	scroll_bar.min_value = EditorGlobal.highest_block
+	scroll_bar.min_value = Editor.highest_block
 
 func _input(event):
 	if event.is_action_pressed("ui_scroll_up"):
