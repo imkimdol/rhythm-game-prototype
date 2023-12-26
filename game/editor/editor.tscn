@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://e0d57lqedoto"]
+[gd_scene load_steps=11 format=3 uid="uid://e0d57lqedoto"]
 
 [ext_resource type="Script" path="res://game/editor/editor.gd" id="1_3m44l"]
 [ext_resource type="PackedScene" uid="uid://dwqbypcyk7kl2" path="res://game/bounds.tscn" id="2_3yvbl"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://f0mfv11wcfcf" path="res://assets/textures/white.png" id="2_uw6uo"]
 [ext_resource type="Theme" uid="uid://potkir36f7bq" path="res://assets/themes/general.tres" id="3_s3y5m"]
 [ext_resource type="Script" path="res://game/editor/drag_area.gd" id="4_i1xny"]
+[ext_resource type="Script" path="res://game/editor/blocks.gd" id="5_p2h83"]
 [ext_resource type="Script" path="res://game/editor/grid.gd" id="6_ccqtk"]
 [ext_resource type="Script" path="res://game/editor/interactive_ui_element.gd" id="7_7bch3"]
 
@@ -42,8 +43,9 @@ position = Vector2(0.000158936, 0)
 scale = Vector2(15.0132, 0.05)
 texture = ExtResource("2_uw6uo")
 
-[node name="Blocks" type="Node2D" parent="."]
+[node name="Blocks" type="CanvasGroup" parent="."]
 unique_name_in_owner = true
+script = ExtResource("5_p2h83")
 
 [node name="DragArea" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -58,7 +60,8 @@ script = ExtResource("4_i1xny")
 shape = SubResource("RectangleShape2D_h2ghn")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Grid" type="Node2D" parent="." node_paths=PackedStringArray("camera")]
+[node name="Grid" type="CanvasGroup" parent="." node_paths=PackedStringArray("camera")]
+unique_name_in_owner = true
 script = ExtResource("6_ccqtk")
 camera = NodePath("../Camera2D")
 
@@ -132,49 +135,49 @@ theme = ExtResource("3_s3y5m")
 text = "Camera Position: 0"
 horizontal_alignment = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+[node name="Buttons" type="HBoxContainer" parent="CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("3_s3y5m")
 
-[node name="NewButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+[node name="NewButton" type="Button" parent="CanvasLayer/Buttons"]
 layout_mode = 2
 theme = ExtResource("3_s3y5m")
 text = "New"
 script = ExtResource("7_7bch3")
 
-[node name="LoadButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+[node name="LoadButton" type="Button" parent="CanvasLayer/Buttons"]
 layout_mode = 2
 theme = ExtResource("3_s3y5m")
 text = "Load"
 script = ExtResource("7_7bch3")
 
-[node name="SaveButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+[node name="SaveButton" type="Button" parent="CanvasLayer/Buttons"]
 layout_mode = 2
 theme = ExtResource("3_s3y5m")
 text = "Save"
 script = ExtResource("7_7bch3")
 
-[node name="SaveAsButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+[node name="SaveAsButton" type="Button" parent="CanvasLayer/Buttons"]
 layout_mode = 2
 theme = ExtResource("3_s3y5m")
 text = "Save As"
 script = ExtResource("7_7bch3")
 
-[node name="SongButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+[node name="SongButton" type="Button" parent="CanvasLayer/Buttons"]
 layout_mode = 2
 theme = ExtResource("3_s3y5m")
 text = "Pick Song"
 script = ExtResource("7_7bch3")
 
-[node name="PlayButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+[node name="PlayButton" type="Button" parent="CanvasLayer/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("3_s3y5m")
 text = "Play"
 script = ExtResource("7_7bch3")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+[node name="Labels" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -183,19 +186,19 @@ offset_bottom = 40.0
 grow_horizontal = 0
 alignment = 2
 
-[node name="Bpm" type="Label" parent="CanvasLayer/VBoxContainer"]
+[node name="Bpm" type="Label" parent="CanvasLayer/Labels"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "120 bpm"
 horizontal_alignment = 2
 
-[node name="SongPath" type="Label" parent="CanvasLayer/VBoxContainer"]
+[node name="SongPath" type="Label" parent="CanvasLayer/Labels"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "res://music/kb-draft.mp3"
 horizontal_alignment = 2
 
-[node name="FilePath" type="Label" parent="CanvasLayer/VBoxContainer"]
+[node name="FilePath" type="Label" parent="CanvasLayer/Labels"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "res://maps/test.map"
@@ -227,24 +230,24 @@ script = ExtResource("7_7bch3")
 [connection signal="mouse_entered" from="CanvasLayer/BPMEdit" to="CanvasLayer/BPMEdit" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/BPMEdit" to="CanvasLayer/BPMEdit" method="_on_mouse_exited"]
 [connection signal="text_submitted" from="CanvasLayer/BPMEdit" to="." method="_on_text_edit_text_submitted"]
-[connection signal="mouse_entered" from="CanvasLayer/HBoxContainer/NewButton" to="CanvasLayer/HBoxContainer/NewButton" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/HBoxContainer/NewButton" to="CanvasLayer/HBoxContainer/NewButton" method="_on_mouse_exited"]
-[connection signal="pressed" from="CanvasLayer/HBoxContainer/NewButton" to="." method="_on_new_button_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/HBoxContainer/LoadButton" to="CanvasLayer/HBoxContainer/LoadButton" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/HBoxContainer/LoadButton" to="CanvasLayer/HBoxContainer/LoadButton" method="_on_mouse_exited"]
-[connection signal="pressed" from="CanvasLayer/HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/HBoxContainer/SaveButton" to="CanvasLayer/HBoxContainer/SaveButton" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/HBoxContainer/SaveButton" to="CanvasLayer/HBoxContainer/SaveButton" method="_on_mouse_exited"]
-[connection signal="pressed" from="CanvasLayer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/HBoxContainer/SaveAsButton" to="CanvasLayer/HBoxContainer/SaveAsButton" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/HBoxContainer/SaveAsButton" to="CanvasLayer/HBoxContainer/SaveAsButton" method="_on_mouse_exited"]
-[connection signal="pressed" from="CanvasLayer/HBoxContainer/SaveAsButton" to="." method="_on_save_as_button_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/HBoxContainer/SongButton" to="CanvasLayer/HBoxContainer/SongButton" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/HBoxContainer/SongButton" to="CanvasLayer/HBoxContainer/SongButton" method="_on_mouse_exited"]
-[connection signal="pressed" from="CanvasLayer/HBoxContainer/SongButton" to="." method="_on_song_button_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/HBoxContainer/PlayButton" to="CanvasLayer/HBoxContainer/PlayButton" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/HBoxContainer/PlayButton" to="CanvasLayer/HBoxContainer/PlayButton" method="_on_mouse_exited"]
-[connection signal="pressed" from="CanvasLayer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/NewButton" to="CanvasLayer/Buttons/NewButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/NewButton" to="CanvasLayer/Buttons/NewButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/NewButton" to="." method="_on_new_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/LoadButton" to="CanvasLayer/Buttons/LoadButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/LoadButton" to="CanvasLayer/Buttons/LoadButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/SaveButton" to="CanvasLayer/Buttons/SaveButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/SaveButton" to="CanvasLayer/Buttons/SaveButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/SaveAsButton" to="CanvasLayer/Buttons/SaveAsButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/SaveAsButton" to="CanvasLayer/Buttons/SaveAsButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/SaveAsButton" to="." method="_on_save_as_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/SongButton" to="CanvasLayer/Buttons/SongButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/SongButton" to="CanvasLayer/Buttons/SongButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/SongButton" to="." method="_on_song_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/PlayButton" to="CanvasLayer/Buttons/PlayButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/PlayButton" to="CanvasLayer/Buttons/PlayButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/VScrollBar" to="CanvasLayer/VScrollBar" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/VScrollBar" to="CanvasLayer/VScrollBar" method="_on_mouse_exited"]
 [connection signal="value_changed" from="CanvasLayer/VScrollBar" to="Camera2D" method="_on_v_scroll_bar_value_changed"]

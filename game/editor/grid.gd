@@ -8,9 +8,11 @@ const block_speed = 512.0
 
 func _ready():
 	for n in 50:
-		add_child(grid_bar_scene.instantiate())
+		var new_grid_bar = grid_bar_scene.instantiate()
+		add_child(new_grid_bar)
+		new_grid_bar.entered_or_exited_screen.connect(place_grid_bars)
 
-func _process(_delta):
+func place_grid_bars():
 	var counter = -10
 	var pixels_per_beat = (block_speed * 60.0) / float(Global.bpm)
 	var rounded_camera_pos = int((camera.position.y - camera.camera_offset) / pixels_per_beat) * pixels_per_beat
@@ -28,5 +30,5 @@ func _process(_delta):
 			bar.modulate = Color("ffffff78")
 		else:
 			bar.modulate = Color("ffffff28")
-			
+		
 		counter += 1

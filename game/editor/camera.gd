@@ -33,6 +33,5 @@ func _input(event):
 		position.y += speed / 20.0
 		position.y = min(camera_offset, position.y)
 
-
 func _on_v_scroll_bar_value_changed(value):
 	position.y = value

@@ -1,9 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://cka5oahyxhhvm"]
+[gd_scene load_steps=3 format=3 uid="uid://cka5oahyxhhvm"]
 
 [ext_resource type="Texture2D" uid="uid://f0mfv11wcfcf" path="res://assets/textures/white.png" id="1_pb1wn"]
+[ext_resource type="Script" path="res://game/editor/grid_bar.gd" id="2_mt6lg"]
 
 [node name="GridBar" type="Sprite2D"]
 modulate = Color(1, 1, 1, 0.156863)
 position = Vector2(0, -50)
 scale = Vector2(15, 0.02)
 texture = ExtResource("1_pb1wn")
+script = ExtResource("2_mt6lg")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

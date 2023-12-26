@@ -11,7 +11,7 @@ func _process(_delta):
 	var current_pos = Editor.editor.calculate_mouse_pos(get_viewport().get_mouse_position())
 	var diff = current_pos - original_pos
 	
-	if Editor.mouse_is_holding == true:
+	if Editor.mouse_is_dragging == true:
 		position = original_pos + (diff / 2)
 		
 		scale.x = diff.x / 128

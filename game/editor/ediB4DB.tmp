@@ -1,0 +1,252 @@
+[gd_scene load_steps=11 format=3 uid="uid://e0d57lqedoto"]
+
+[ext_resource type="Script" path="res://game/editor/editor.gd" id="1_3m44l"]
+[ext_resource type="PackedScene" uid="uid://dwqbypcyk7kl2" path="res://game/bounds.tscn" id="2_3yvbl"]
+[ext_resource type="Script" path="res://game/editor/camera.gd" id="2_qotlv"]
+[ext_resource type="Texture2D" uid="uid://f0mfv11wcfcf" path="res://assets/textures/white.png" id="2_uw6uo"]
+[ext_resource type="Theme" uid="uid://potkir36f7bq" path="res://assets/themes/general.tres" id="3_s3y5m"]
+[ext_resource type="Script" path="res://game/editor/drag_area.gd" id="4_i1xny"]
+[ext_resource type="Script" path="res://game/editor/blocks.gd" id="5_p2h83"]
+[ext_resource type="Script" path="res://game/editor/grid.gd" id="6_ccqtk"]
+[ext_resource type="Script" path="res://game/editor/interactive_ui_element.gd" id="7_7bch3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2ghn"]
+size = Vector2(128, 128)
+
+[node name="Editor" type="Node2D"]
+script = ExtResource("1_3m44l")
+
+[node name="Bounds" parent="." instance=ExtResource("2_3yvbl")]
+
+[node name="Start" type="Node2D" parent="."]
+scale = Vector2(0.999124, 0.964112)
+
+[node name="StartLabel" type="Label" parent="Start"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = 5.0
+offset_right = 75.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_s3y5m")
+text = "Song Start"
+horizontal_alignment = 1
+
+[node name="StartBar" type="Sprite2D" parent="Start"]
+modulate = Color(1, 1, 1, 0.54902)
+position = Vector2(0.000158936, 0)
+scale = Vector2(15.0132, 0.05)
+texture = ExtResource("2_uw6uo")
+
+[node name="Blocks" type="CanvasGroup" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_p2h83")
+
+[node name="DragArea" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.470588)
+texture = ExtResource("2_uw6uo")
+script = ExtResource("4_i1xny")
+
+[node name="Area2D" type="Area2D" parent="DragArea"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DragArea/Area2D"]
+shape = SubResource("RectangleShape2D_h2ghn")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Grid" type="CanvasGroup" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("6_ccqtk")
+camera = NodePath("../Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("position_label", "bounds", "scroll_bar")]
+unique_name_in_owner = true
+position = Vector2(0, -480)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+rotation_smoothing_enabled = true
+script = ExtResource("2_qotlv")
+position_label = NodePath("../CanvasLayer/CameraPos")
+bounds = NodePath("../Bounds")
+scroll_bar = NodePath("../CanvasLayer/VScrollBar")
+
+[node name="LoadDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+initial_position = 1
+size = Vector2i(700, 450)
+ok_button_text = "Open"
+file_mode = 0
+access = 1
+root_subfolder = "maps"
+filters = PackedStringArray("*.map")
+
+[node name="SaveDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Save Map"
+initial_position = 1
+size = Vector2i(700, 450)
+access = 1
+root_subfolder = "maps"
+filters = PackedStringArray("*.map")
+
+[node name="SongDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+initial_position = 1
+size = Vector2i(700, 450)
+ok_button_text = "Open"
+file_mode = 0
+access = 1
+root_subfolder = "music"
+filters = PackedStringArray("*.mp3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BPMEdit" type="LineEdit" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 581.0
+offset_right = 701.0
+offset_bottom = 50.0
+theme = ExtResource("3_s3y5m")
+placeholder_text = "120"
+max_length = 3
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+script = ExtResource("7_7bch3")
+
+[node name="CameraPos" type="Label" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -42.0
+offset_right = 1.0
+grow_vertical = 0
+size_flags_horizontal = 8
+theme = ExtResource("3_s3y5m")
+text = "Camera Position: 0"
+horizontal_alignment = 2
+
+[node name="Buttons" type="HBoxContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("3_s3y5m")
+
+[node name="NewButton" type="Button" parent="CanvasLayer/Buttons"]
+layout_mode = 2
+theme = ExtResource("3_s3y5m")
+text = "New"
+script = ExtResource("7_7bch3")
+
+[node name="LoadButton" type="Button" parent="CanvasLayer/Buttons"]
+layout_mode = 2
+theme = ExtResource("3_s3y5m")
+text = "Load"
+script = ExtResource("7_7bch3")
+
+[node name="SaveButton" type="Button" parent="CanvasLayer/Buttons"]
+layout_mode = 2
+theme = ExtResource("3_s3y5m")
+text = "Save"
+script = ExtResource("7_7bch3")
+
+[node name="SaveAsButton" type="Button" parent="CanvasLayer/Buttons"]
+layout_mode = 2
+theme = ExtResource("3_s3y5m")
+text = "Save As"
+script = ExtResource("7_7bch3")
+
+[node name="SongButton" type="Button" parent="CanvasLayer/Buttons"]
+layout_mode = 2
+theme = ExtResource("3_s3y5m")
+text = "Pick Song"
+script = ExtResource("7_7bch3")
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_s3y5m")
+text = "Play"
+script = ExtResource("7_7bch3")
+
+[node name="Labels" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+alignment = 2
+
+[node name="Bpm" type="Label" parent="CanvasLayer/Labels"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "120 bpm"
+horizontal_alignment = 2
+
+[node name="SongPath" type="Label" parent="CanvasLayer/Labels"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "res://music/kb-draft.mp3"
+horizontal_alignment = 2
+
+[node name="FilePath" type="Label" parent="CanvasLayer/Labels"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "res://maps/test.map"
+horizontal_alignment = 2
+
+[node name="VScrollBar" type="VScrollBar" parent="CanvasLayer"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -435.0
+offset_right = -2.0
+offset_bottom = 509.0
+grow_horizontal = 0
+grow_vertical = 2
+min_value = -880.0
+max_value = 1120.0
+page = 1600.0
+value = -480.0
+script = ExtResource("7_7bch3")
+
+[connection signal="select_blocks" from="." to="DragArea" method="_on_editor_select_blocks"]
+[connection signal="file_selected" from="LoadDialog" to="." method="_on_load_dialog_file_selected"]
+[connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
+[connection signal="file_selected" from="SaveDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="SongDialog" to="." method="_on_song_dialog_file_selected"]
+[connection signal="mouse_entered" from="CanvasLayer/BPMEdit" to="CanvasLayer/BPMEdit" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/BPMEdit" to="CanvasLayer/BPMEdit" method="_on_mouse_exited"]
+[connection signal="text_submitted" from="CanvasLayer/BPMEdit" to="." method="_on_text_edit_text_submitted"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/NewButton" to="CanvasLayer/Buttons/NewButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/NewButton" to="CanvasLayer/Buttons/NewButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/NewButton" to="." method="_on_new_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/LoadButton" to="CanvasLayer/Buttons/LoadButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/LoadButton" to="CanvasLayer/Buttons/LoadButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/SaveButton" to="CanvasLayer/Buttons/SaveButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/SaveButton" to="CanvasLayer/Buttons/SaveButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/SaveAsButton" to="CanvasLayer/Buttons/SaveAsButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/SaveAsButton" to="CanvasLayer/Buttons/SaveAsButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/SaveAsButton" to="." method="_on_save_as_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/SongButton" to="CanvasLayer/Buttons/SongButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/SongButton" to="CanvasLayer/Buttons/SongButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/SongButton" to="." method="_on_song_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Buttons/PlayButton" to="CanvasLayer/Buttons/PlayButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Buttons/PlayButton" to="CanvasLayer/Buttons/PlayButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Buttons/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/VScrollBar" to="CanvasLayer/VScrollBar" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/VScrollBar" to="CanvasLayer/VScrollBar" method="_on_mouse_exited"]
+[connection signal="value_changed" from="CanvasLayer/VScrollBar" to="Camera2D" method="_on_v_scroll_bar_value_changed"]
